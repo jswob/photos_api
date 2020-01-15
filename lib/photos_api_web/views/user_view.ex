@@ -13,4 +13,15 @@ defmodule PhotosApiWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id, name: user.name}
   end
+
+  def render("sign_in.json", %{user: user}) do
+    %{
+      data: %{
+        user: %{
+          id: user.id,
+          name: user.name
+        }
+      }
+    }
+  end
 end

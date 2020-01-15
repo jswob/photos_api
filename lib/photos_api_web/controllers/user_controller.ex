@@ -2,6 +2,7 @@ defmodule PhotosApiWeb.UserController do
   use PhotosApiWeb, :controller
 
   alias PhotosApi.Accounts
+  alias PhotosApi.Auth
   alias PhotosApi.Accounts.User
 
   action_fallback PhotosApiWeb.FallbackController
@@ -38,6 +39,22 @@ defmodule PhotosApiWeb.UserController do
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def sign_in(conn, %{"name" => name, "password" => password}) do
+    case Auth.authenticate_user(name, password) do
+      {:ok, user} ->
+        conn
+        |> put_status(:ok)
+        |> put_view(PhotosApiWeb.UserView)
+        |> render("sign_in.json", user: user)
+
+      {:error, message} ->
+        conn
+        |> put_status(:unauthorized)
+        |> put_view(PhotosApiWeb.ErrorView)
+        |> render("401.json", message: message)
     end
   end
 end
