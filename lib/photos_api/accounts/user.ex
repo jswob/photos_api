@@ -12,8 +12,8 @@ defmodule PhotosApi.Accounts.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :is_active, :password])
-    |> validate_required([:name, :is_active, :password])
+    |> cast(attrs, [:name, :password])
+    |> validate_required([:name, :password])
     |> unique_constraint(:name)
     |> validate_length(:name, min: 1, max: 20)
     |> put_password_hash()
