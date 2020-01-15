@@ -7,7 +7,7 @@ defmodule PhotosApi.TestHelpers do
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
-      |> Enum.into(%{name: "some name"})
+      |> Enum.into(%{name: "some name", password: "some new password"})
       |> Accounts.create_user()
 
     user
