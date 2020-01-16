@@ -53,7 +53,9 @@ defmodule PhotosApiWeb.PhotoControllerTest do
   end
 
   describe "update photo" do
-    setup [:create_photo]
+    setup %{current_user: current_user} do
+      create_photo(current_user)
+    end
 
     test "renders photo when data is valid", %{conn: conn, photo: %Photo{id: id} = photo} do
       conn = put(conn, Routes.photo_path(conn, :update, photo), photo: @update_attrs)
@@ -76,7 +78,9 @@ defmodule PhotosApiWeb.PhotoControllerTest do
   end
 
   describe "delete photo" do
-    setup [:create_photo]
+    setup %{current_user: current_user} do
+      create_photo(current_user)
+    end
 
     test "deletes chosen photo", %{conn: conn, photo: photo} do
       conn = delete(conn, Routes.photo_path(conn, :delete, photo))
@@ -88,8 +92,8 @@ defmodule PhotosApiWeb.PhotoControllerTest do
     end
   end
 
-  defp create_photo(_) do
-    photo = photo_fixture()
+  defp create_photo(current_user) do
+    photo = photo_fixture(current_user)
     {:ok, photo: photo}
   end
 end
