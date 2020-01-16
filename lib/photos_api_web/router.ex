@@ -1,13 +1,16 @@
 defmodule PhotosApiWeb.Router do
   use PhotosApiWeb, :router
 
+  alias PhotosApi.Accounts
+
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
+    plug PhotosApi.Auth
   end
 
   pipeline :api_auth do
-    plug :ensure_authenticated
+    plug PhotosApi.Auth, :ensure_authenticated
   end
 
   scope "/api", PhotosApiWeb do
@@ -21,19 +24,5 @@ defmodule PhotosApiWeb.Router do
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/photos", PhotoController, exept: [:new, :edit]
-  end
-
-  defp ensure_authenticated(conn, _opts) do
-    current_user_id = get_session(conn, :current_user_id)
-
-    if current_user_id do
-      conn
-    else
-      conn
-      |> put_status(:unauthorized)
-      |> put_view(PhotosApiWeb.ErrorView)
-      |> render("401.json", message: "Unauthenticated user")
-      |> halt()
-    end
   end
 end
