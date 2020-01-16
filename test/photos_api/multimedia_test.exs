@@ -7,17 +7,12 @@ defmodule PhotosApi.MultimediaTest do
     alias PhotosApi.Multimedia.Photo
 
     @valid_attrs %{description: "some description", name: "some name", url: "some url"}
-    @update_attrs %{description: "some updated description", name: "some updated name", url: "some updated url"}
+    @update_attrs %{
+      description: "some updated description",
+      name: "some updated name",
+      url: "some updated url"
+    }
     @invalid_attrs %{description: nil, name: nil, url: nil}
-
-    def photo_fixture(attrs \\ %{}) do
-      {:ok, photo} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Multimedia.create_photo()
-
-      photo
-    end
 
     test "list_photos/0 returns all photos" do
       photo = photo_fixture()

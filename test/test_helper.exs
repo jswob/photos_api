@@ -3,6 +3,7 @@ Ecto.Adapters.SQL.Sandbox.mode(PhotosApi.Repo, :manual)
 
 defmodule PhotosApi.TestHelpers do
   alias PhotosApi.Accounts
+  alias PhotosApi.Multimedia
   alias Plug.Test
 
   def user_fixture(attrs \\ %{}) do
@@ -12,6 +13,15 @@ defmodule PhotosApi.TestHelpers do
       |> Accounts.create_user()
 
     user
+  end
+
+  def photo_fixture(attrs \\ %{}) do
+    {:ok, photo} =
+      attrs
+      |> Enum.into(%{description: "some description", name: "some name", url: "some url"})
+      |> Multimedia.create_photo()
+
+    photo
   end
 
   def setup_current_user(conn, attrs) do

@@ -20,6 +20,7 @@ defmodule PhotosApiWeb.Router do
     pipe_through [:api, :api_auth]
 
     resources "/users", UserController, except: [:new, :edit]
+    resources "/photos", PhotoController, exept: [:new, :edit]
   end
 
   defp ensure_authenticated(conn, _opts) do

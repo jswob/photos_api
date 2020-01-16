@@ -1,7 +1,6 @@
 defmodule PhotosApiWeb.PhotoControllerTest do
   use PhotosApiWeb.ConnCase
 
-  alias PhotosApi.Multimedia
   alias PhotosApi.Multimedia.Photo
 
   @create_attrs %{
@@ -15,14 +14,14 @@ defmodule PhotosApiWeb.PhotoControllerTest do
     url: "some updated url"
   }
   @invalid_attrs %{description: nil, name: nil, url: nil}
-
-  def fixture(:photo) do
-    {:ok, photo} = Multimedia.create_photo(@create_attrs)
-    photo
-  end
+  @current_user_attrs %{
+    name: "current user name",
+    password: "current user password"
+  }
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: conn, current_user: current_user} = setup_current_user(conn, @current_user_attrs)
+    {:ok, conn: put_req_header(conn, "accept", "application/json"), current_user: current_user}
   end
 
   describe "index" do
@@ -90,7 +89,7 @@ defmodule PhotosApiWeb.PhotoControllerTest do
   end
 
   defp create_photo(_) do
-    photo = fixture(:photo)
+    photo = photo_fixture()
     {:ok, photo: photo}
   end
 end

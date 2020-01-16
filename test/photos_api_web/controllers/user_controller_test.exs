@@ -1,7 +1,6 @@
 defmodule PhotosApiWeb.UserControllerTest do
   use PhotosApiWeb.ConnCase
 
-  alias PhotosApi.Accounts
   alias PhotosApi.Accounts.User
 
   @create_attrs %{
