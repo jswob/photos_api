@@ -3,7 +3,6 @@ defmodule PhotosApiWeb.UserControllerTest do
 
   alias PhotosApi.Accounts
   alias PhotosApi.Accounts.User
-  alias Plug.Test
 
   @create_attrs %{
     name: "some name",
@@ -19,18 +18,8 @@ defmodule PhotosApiWeb.UserControllerTest do
     password: "current user password"
   }
 
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
-  end
-
-  def fixture(:current_user) do
-    {:ok, current_user} = Accounts.create_user(@current_user_attrs)
-    current_user
-  end
-
   setup %{conn: conn} do
-    {:ok, conn: conn, current_user: current_user} = setup_current_user(conn)
+    {:ok, conn: conn, current_user: current_user} = setup_current_user(conn, @current_user_attrs)
     {:ok, conn: put_req_header(conn, "accept", "application/json"), current_user: current_user}
   end
 
@@ -134,15 +123,7 @@ defmodule PhotosApiWeb.UserControllerTest do
   end
 
   defp create_user(_) do
-    user = fixture(:user)
+    user = user_fixture(@create_attrs)
     {:ok, user: user}
-  end
-
-  defp setup_current_user(conn) do
-    current_user = fixture(:current_user)
-
-    {:ok,
-     conn: Test.init_test_session(conn, current_user_id: current_user.id),
-     current_user: current_user}
   end
 end

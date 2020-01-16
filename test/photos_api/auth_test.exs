@@ -2,7 +2,6 @@ defmodule PhotosApi.AuthTest do
   use PhotosApi.DataCase, async: true
 
   alias PhotosApi.Auth
-  alias PhotosApi.Accounts.User
 
   @password "some password"
 
