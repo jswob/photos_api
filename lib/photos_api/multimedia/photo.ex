@@ -6,7 +6,7 @@ defmodule PhotosApi.Multimedia.Photo do
     field :description, :string
     field :name, :string
     field :url, :string
-    field :user_id, :id
+    belongs_to :user, PhotosApi.Accounts.User
 
     timestamps()
   end
