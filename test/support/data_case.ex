@@ -22,6 +22,7 @@ defmodule PhotosApi.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import PhotosApi.DataCase
+      import PhotosApi.TestHelpers
     end
   end
 
