@@ -15,11 +15,11 @@ defmodule PhotosApi.TestHelpers do
     user
   end
 
-  def photo_fixture(attrs \\ %{}) do
-    {:ok, photo} =
-      attrs
-      |> Enum.into(%{description: "some description", name: "some name", url: "some url"})
-      |> Multimedia.create_photo()
+  def photo_fixture(%Accounts.User{} = user, attrs \\ %{}) do
+    attrs =
+      Enum.into(attrs, %{description: "some description", name: "some name", url: "some url"})
+
+    {:ok, photo} = Multimedia.create_photo(user, attrs)
 
     photo
   end
